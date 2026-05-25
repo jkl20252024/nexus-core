@@ -56,7 +56,7 @@ def register_ipn():
     }
 
     payload = {
-        "url": "http://127.0.0.1:8000/payment-callback",
+        "url": "https://nexus-core-j4ff.onrender.com/payment-callback",
         "ipn_notification_type": "GET"
     }
 
@@ -88,7 +88,7 @@ def create_payment_link(amount, email, name):
         "currency": "UGX",
         "amount": amount,
         "description": "Nexus Core AI Service",
-        "callback_url": "http://127.0.0.1:8000/payment-callback",
+        "callback_url": "https://nexus-core-j4ff.onrender.com/payment-callback",
         "notification_id": "2ef4b6cd-b8ee-494d-8caf-da58c1d2e8de",
 
         "billing_address": {

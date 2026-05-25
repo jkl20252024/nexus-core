@@ -5,22 +5,60 @@ import { useEffect, useState } from "react"
 export default function Home() {
 
   const [stats, setStats] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
 
-    fetch("http://127.0.0.1:8000/dashboard-stats")
-      .then(res => res.json())
-      .then(data => setStats(data))
+    async function loadData() {
+
+      try {
+
+        const res = await fetch(
+          "https://nexus-core-j4ff.onrender.com/dashboard-stats"
+        )
+
+        const data = await res.json()
+
+        setStats(data)
+
+      } catch (err) {
+
+        console.error(err)
+
+      } finally {
+
+        setLoading(false)
+
+      }
+    }
+
+    loadData()
 
   }, [])
 
-  if (!stats) {
+  if (loading) {
     return (
-      <main className="p-10">
+      <div className="p-10 text-white">
         Loading Nexus Core...
-      </main>
+      </div>
     )
   }
+
+  return (
+
+    <main className="p-10 text-white">
+
+      <h1 className="text-4xl font-bold mb-6">
+        Nexus Core
+      </h1>
+
+      <pre>
+        {JSON.stringify(stats, null, 2)}
+      </pre>
+
+    </main>
+  )
+
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-8">
@@ -140,7 +178,8 @@ export default function Home() {
 
     </main>
   )
-}
+} 
+
 
 function Card({ title, value }: any) {
 
